@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Harga Item Server Minecraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <!-- Google Font -->  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0b1220;
+      color: #e5e7eb;
+    }
+    header {
+      padding: 24px 20px 18px;
+      text-align: center;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .icon {
+      width: 48px;
+      height: 48px;
+      background: #020617;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+    .name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .price {
+      text-align: right;
+    }
+    .current {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .change {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .up { color: #22c55e; }
+    .down { color: #ef4444; }
+    .same { color: #94a3b8; }
+  </style></head>
+<body><header>
+  <img src="logo.png" alt="Lunas SMP" style="max-width:320px;width:100%;margin-bottom:8px;" />
+  <div style="font-size:13px;color:#94a3b8;">Last update: <span id="lastUpdate"></span></div>
+</header><div class="container" id="itemList"></div><script>
+  // LAST UPDATE
+  const lastUpdate = new Date('2026-01-15');
+  document.getElementById('lastUpdate').innerText = lastUpdate.toLocaleDateString('id-ID');
+
+
+  // DATA HARGA
+  const items = [
+    { name: 'Sugarcane', icon: 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20/assets/minecraft/textures/item/sugar_cane.png', current: 10, previous: 8 },
+    { name: 'Bamboo', icon: 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20/assets/minecraft/textures/item/bamboo.png', current: 10, previous: 10 },
+    { name: 'Cactus', icon: 'https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20/assets/minecraft/textures/block/cactus_side.png', current: 4, previous: 6 }
+  ];
+
+  const container = document.getElementById('itemList');
+
+  items.forEach(item => {
+    let status, arrow;
+    if (item.current > item.previous) {
+      status = 'up';
+      arrow = '▲';
+    } else if (item.current < item.previous) {
+      status = 'down';
+      arrow = '▼';
+    } else {
+      status = 'same';
+      arrow = '▬';
+    }
+
+    container.innerHTML += `
+      <div class="card">
+        <div class="item">
+          <div class="icon"><img src="${item.icon}" alt="${item.name}" width="40" height="40"></div>
+          <div class="name">${item.name}</div>
+        </div>
+        <div class="price">
+          <div class="current">$${item.current}</div>
+          <div class="change ${status}">${arrow} $${Math.abs(item.current - item.previous)}</div>
+        </div>
+      </div>
+    `;
+  });
+</script></body>
+</html>
